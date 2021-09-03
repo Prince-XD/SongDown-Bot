@@ -1,0 +1,32 @@
+{
+    "name": "Music-Bot",
+    "description": "A Simple Bot To Download Music In High Quality.",
+    "logo": "https://telegra.ph/file/c3c4ebdc70fa7a5510968.jpg",
+    "keywords": [
+        "Avengers",
+        "Music-Bot",
+        "Telegram Bot",
+        "Kannan"
+    ],
+    "env": {
+        "BOT_TOKEN": {
+            "description": "Your Telegram Bot Token from @BotFather",
+            "value": ""
+        }
+    },
+    "addons": [],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "free"
+        }
+    }
+}
