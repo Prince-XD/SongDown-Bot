@@ -1,4 +1,4 @@
 import os
 API_ID = int(os.getenv("API_ID", "8673250"))
-API_HASH = os.getenv("API_HASH", "049ff3986e534e1c3aec4fed154a30b4")
+API_HASH = os.getenv("API_HASH", "bab0eb3130eb4930cc40112635b2dc4d")
 BOT_TOKEN = os.getenv("BOT_TOKEN")
