@@ -16,7 +16,8 @@ from yt_dlp import YoutubeDL
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from pyrogram import filters, Client, idle
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
+                            InlineKeyboardMarkup, InputMediaPhoto, Message)
 from config import API_ID, API_HASH, BOT_TOKEN
 
 # logging
