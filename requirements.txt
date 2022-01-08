@@ -6,3 +6,6 @@ youtube_search
 requests
 ffmpeg-python
 ffmpeg
+wget
+yt-dlp
+tswift
