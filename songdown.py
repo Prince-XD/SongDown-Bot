@@ -8,6 +8,7 @@ import time
 import requests
 import logging
 from urllib.parse import urlparse
+from typing import Union
 from pyrogram import filters
 from pyrogram.types import (InlineKeyboardMarkup, InputMediaPhoto, Message,
                             Voice)
@@ -18,6 +19,8 @@ from pyrogram import filters, Client, idle
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaPhoto, Message)
 from config import API_ID, API_HASH, BOT_TOKEN
+from prince import (BOT_USERNAME, DURATION_LIMIT, DURATION_LIMIT_MIN,
+                   MUSIC_BOT_NAME, app, db_mem)
 
 # logging
 bot = Client(
@@ -62,6 +65,12 @@ async def help(client, message):
 @bot.on_message(filters.command(['about']))
 async def about(client, message):
        await message.reply("➪<b>Name</b> : ✫<i>Song Downloader</i>\n➪<b>Developer</b> : ✫[Prince](https://t.me/About_devildad)\n➪<b>Language</b> : ✫<i>Python3</i>\n➪<b>Server</b> : ✫[𝘏𝘦𝘳𝘰𝘬𝘶](https://heroku.com/)\n➪<b>Source Code</b> : ✫[𝘊𝘭𝘪𝘤𝘬 𝘏𝘦𝘳𝘦](https://t.me/princebotsupport)",
+    )
+
+def time_to_seconds(time):
+    stringt = str(time)
+    return sum(
+        int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
     )
 
 def song_markup(videoid, duration, user_id, query, query_type):
@@ -111,22 +120,8 @@ def song_download_markup(videoid, user_id):
     ]
     return buttons
 
-import asyncio
-from os import path
-
-from pyrogram import filters
-from pyrogram.types import (InlineKeyboardMarkup, InputMediaPhoto, Message,
-                            Voice)
-from youtube_search import YoutubeSearch
-import (BOT_USERNAME, DURATION_LIMIT, DURATION_LIMIT_MIN,
-                   MUSIC_BOT_NAME, app, db_mem)
 
 loop = asyncio.get_event_loop()
-
-from Yukki.Utilities.changers import time_to_seconds
-
-
-from typing import Union
 
 def get_url(message_1: Message) -> Union[str, None]:
     messages = [message_1]
