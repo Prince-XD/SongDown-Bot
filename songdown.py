@@ -64,93 +64,52 @@ async def about(client, message):
        await message.reply("➪<b>Name</b> : ✫<i>Song Downloader</i>\n➪<b>Developer</b> : ✫[Prince](https://t.me/About_devildad)\n➪<b>Language</b> : ✫<i>Python3</i>\n➪<b>Server</b> : ✫[𝘏𝘦𝘳𝘰𝘬𝘶](https://heroku.com/)\n➪<b>Source Code</b> : ✫[𝘊𝘭𝘪𝘤𝘬 𝘏𝘦𝘳𝘦](https://t.me/princebotsupport)",
     )
 
-async def progress(current, total, message, start, type_of_ps, file_name=None):
-    now = time.time()
-    diff = now - start
-    if round(diff % 10.00) == 0 or current == total:
-        percentage = current * 100 / total
-        speed = current / diff
-        elapsed_time = round(diff) * 1000
-        if elapsed_time == 0:
-            return
-        time_to_completion = round((total - current) / speed) * 1000
-        estimated_total_time = elapsed_time + time_to_completion
-        progress_str = "{0}{1} {2}%\n".format(
-            "".join(["🔴" for i in range(math.floor(percentage / 10))]),
-            "".join(["🔘" for i in range(10 - math.floor(percentage / 10))]),
-            round(percentage, 2),
-        )
-        tmp = progress_str + "{0} of {1}\nETA: {2}".format(
-            humanbytes(current), humanbytes(total), time_formatter(estimated_total_time)
-        )
-        if file_name:
-            try:
-                await message.edit(
-                    "{}\n**File Name:** `{}`\n{}".format(type_of_ps, file_name, tmp)
-                )
-            except FloodWait as e:
-                await asyncio.sleep(e.x)
-            except MessageNotModified:
-                pass
-        else:
-            try:
-                await message.edit("{}\n{}".format(type_of_ps, tmp))
-            except FloodWait as e:
-                await asyncio.sleep(e.x)
-            except MessageNotModified:
-                pass
+def song_markup(videoid, duration, user_id, query, query_type):
+    buttons = [
+        [
+            InlineKeyboardButton(
+                text="❮",
+                callback_data=f"song_right B|{query_type}|{query}|{user_id}",
+            ),
+            InlineKeyboardButton(
+                text="Download",
+                callback_data=f"qwertyuiopasdfghjkl {videoid}|{user_id}",
+            ),
+            InlineKeyboardButton(
+                text="❯",
+                callback_data=f"song_right F|{query_type}|{query}|{user_id}",
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                text="🗑 Close Search",
+                callback_data=f"forceclose {query}|{user_id}",
+            )
+        ],
+    ]
+    return buttons
 
 
-def get_text(message: Message) -> [None, str]:
-    text_to_return = message.text
-    if message.text is None:
-        return None
-    if " " in text_to_return:
-        try:
-            return message.text.split(None, 1)[1]
-        except IndexError:
-            return None
-    else:
-        return None
-
-def get_file_extension_from_url(url):
-    url_path = urlparse(url).path
-    basename = os.path.basename(url_path)
-    return basename.split(".")[-1]
-
-
-def download_youtube_audio(url: str):
-    global is_downloading
-    with yt_dlp.YoutubeDL(
-        {
-            "format": "bestaudio",
-            "writethumbnail": True,
-            "quiet": True,
-        }
-    ) as ydl:
-        info_dict = ydl.extract_info(url, download=False)
-        if int(float(info_dict["duration"])) > 180:
-            is_downloading = False
-            return []
-        ydl.process_info(info_dict)
-        audio_file = ydl.prepare_filename(info_dict)
-        basename = audio_file.rsplit(".", 1)[-2]
-        if info_dict["ext"] == "webm":
-            audio_file_opus = basename + ".opus"
-            ffmpeg.input(audio_file).output(
-                audio_file_opus, codec="copy", loglevel="error"
-            ).overwrite_output().run()
-            os.remove(audio_file)
-            audio_file = audio_file_opus
-        thumbnail_url = info_dict["thumbnail"]
-        thumbnail_file = (
-            basename + "." + get_file_extension_from_url(thumbnail_url)
-        )
-        title = info_dict["title"]
-        performer = info_dict["uploader"]
-        duration = int(float(info_dict["duration"]))
-    return [title, performer, duration, audio_file, thumbnail_file]
-
+def song_download_markup(videoid, user_id):
+    buttons = [
+        [
+            InlineKeyboardButton(
+                text="⬇️ Get Audio",
+                callback_data=f"gets audio|{videoid}|{user_id}",
+            ),
+            InlineKeyboardButton(
+                text="⬇️ Get Video",
+                callback_data=f"gets video|{videoid}|{user_id}",
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                text="🗑 Close Menu",
+                callback_data=f"forceclose {videoid}|{user_id}",
+            )
+        ],
+    ]
+    return buttons
 
 @bot.on_message(filters.command(["vsong", "video"]))
 async def ytmusic(client, message: Message):
