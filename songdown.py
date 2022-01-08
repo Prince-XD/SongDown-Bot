@@ -18,9 +18,10 @@ from pyrogram import filters, Client, idle
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaPhoto, Message)
 from config import API_ID, API_HASH, BOT_TOKEN
-from prince import (BOT_USERNAME, DURATION_LIMIT, DURATION_LIMIT_MIN,
-                   MUSIC_BOT_NAME, app, db_mem)
 
+DURATION_LIMIT = int(time_to_seconds(f"{DURATION_LIMIT_MIN}:00"))
+BOT_USERNAME = ""
+MUSIC_BOT_NAME = MUSIC_BOT_NAME
 # logging
 bot = Client(
    "Music-Bot",
