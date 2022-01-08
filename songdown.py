@@ -1,21 +1,3 @@
-Skip to content
-jamelsingh
-/
-gbot
-Public
-Code
-Issues
-Pull requests
-Projects
-Wiki
-More
-gbot/Zaid/modules/music.py /
-@AMANTYA1
-AMANTYA1 Update music.py
- History
- 2 contributors
-@AMANTYA1@ITZ-ZAID
-252 lines (235 sloc)  7.87 KB
 from __future__ import unicode_literals
 import asyncio
 import math
@@ -268,16 +250,3 @@ async def lyrics_func(_, message):
         return await m.edit(f"**__{lyrics}__**")
     lyrics = await paste(lyrics)
     await m.edit(f"**LYRICS_TOO_LONG:** [URL]({lyrics})")
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
- You signed in with another tab or window. Reload to refresh your session.Loading complete
