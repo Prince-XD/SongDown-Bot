@@ -17,7 +17,7 @@ from youtubesearchpython import SearchVideos
 from pyrogram import filters, Client, idle
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaPhoto, Message)
-from config import API_ID, API_HASH, BOT_TOKEN
+from config import API_ID, API_HASH, BOT_TOKEN, DURATION_LIMIT_MIN
 
 def time_to_seconds(time):
     stringt = str(time)
