@@ -821,8 +821,7 @@ async def downloadaudiocli(command_to_exec):
 
 
 @bot.on_message(
-filters.command(["song", "video"])
-)
+filters.text)
 
 async def play(_, message: Message):
     chat_id = message.chat.id
