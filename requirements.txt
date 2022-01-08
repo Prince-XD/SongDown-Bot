@@ -1,4 +1,4 @@
-git+https://github.com/Makoto-XD/pyrogram@master
+git+https://github.com/Makoto-XD/pyrogram@master.git
 TgCrypto==1.2.2
 youtube_dl
 youtube_search_python
