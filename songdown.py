@@ -7,6 +7,7 @@ import time
 import requests
 import wget
 import yt_dlp
+import logging
 from urllib.parse import urlparse
 from pyrogram import filters
 from pyrogram.types import Message
@@ -14,14 +15,7 @@ from tswift import Song
 from yt_dlp import YoutubeDL
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
-
-import os
-import ffmpeg
-import logging
-import requests
-import youtube_dl
 from pyrogram import filters, Client, idle
-from youtube_search import YoutubeSearch
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from config import API_ID, API_HASH, BOT_TOKEN
 
@@ -69,13 +63,6 @@ async def help(client, message):
 async def about(client, message):
        await message.reply("➪<b>Name</b> : ✫<i>Song Downloader</i>\n➪<b>Developer</b> : ✫[Prince](https://t.me/About_devildad)\n➪<b>Language</b> : ✫<i>Python3</i>\n➪<b>Server</b> : ✫[𝘏𝘦𝘳𝘰𝘬𝘶](https://heroku.com/)\n➪<b>Source Code</b> : ✫[𝘊𝘭𝘪𝘤𝘬 𝘏𝘦𝘳𝘦](https://t.me/princebotsupport)",
     )
-
-bot = Client(
-   "Music-Bot",
-   api_id=API_ID,
-   api_hash=API_HASH,
-   bot_token=BOT_TOKEN,
-)
 
 async def progress(current, total, message, start, type_of_ps, file_name=None):
     now = time.time()
