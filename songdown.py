@@ -299,3 +299,7 @@ async def ytmusic(client, message: Message):
     for files in (sedlyf, file_stark):
         if files and os.path.exists(files):
             os.remove(files)
+    except Exception as e:
+        print(e)
+
+bot.run()
