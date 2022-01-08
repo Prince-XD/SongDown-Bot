@@ -3,6 +3,7 @@ import asyncio
 import math
 import io
 import os
+from os import path
 import time
 import requests
 import logging
@@ -110,82 +111,6 @@ def song_download_markup(videoid, user_id):
     ]
     return buttons
 
-@bot.on_message(filters.command(["vsong", "video"]))
-async def ytmusic(client, message: Message):
-    urlissed = get_text(message)
-
-    pablo = await client.send_message(
-        message.chat.id, f"`Getting {urlissed} From Youtube Servers. Please Wait.`"
-    )
-    if not urlissed:
-        await pablo.edit("Invalid Command Syntax, Please Check Help Menu To Know More!")
-        return
-
-    search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
-    mi = search.result()
-    mio = mi["search_result"]
-    mo = mio[0]["link"]
-    thum = mio[0]["title"]
-    fridayz = mio[0]["id"]
-    thums = mio[0]["channel"]
-    kekme = f"https://img.youtube.com/vi/{fridayz}/hqdefault.jpg"
-    await asyncio.sleep(0.6)
-    url = mo
-    sedlyf = wget.download(kekme)
-    opts = {
-        "format": "best",
-        "addmetadata": True,
-        "key": "FFmpegMetadata",
-        "prefer_ffmpeg": True,
-        "geo_bypass": True,
-        "nocheckcertificate": True,
-        "postprocessors": [{"key": "FFmpegVideoConvertor", "preferedformat": "mp4"}],
-        "outtmpl": "%(id)s.mp4",
-        "logtostderr": False,
-        "quiet": True,
-    }
-    try:
-        with YoutubeDL(opts) as ytdl:
-            infoo = ytdl.extract_info(url, False)
-            duration = round(infoo["duration"] / 60)
-            LIMIT = "180"          
- 
-            if duration > LIMIT:
-                await pablo.edit(
-                    f"❌ **durasinya kelamaan gabisa tot:v**"
-                )
-                is_downloading = False
-                return
-            ytdl_data = ytdl.extract_info(url, download=True)
-
-    except Exception as e:
-        await pablo.edit(f"**Failed To Download** \n**Error :** `{str(e)}`")
-        return
-    c_time = time.time()
-    file_stark = f"{ytdl_data['id']}.mp4"
-    capy = f"**Video Name ➠** [{thum}]({mo}) \n**Requested For :** `{urlissed}` \n**Channel :** `{thums}` "
-    await client.send_video(
-        message.chat.id,
-        video=open(file_stark, "rb"),
-        duration=int(ytdl_data["duration"]),
-        file_name=str(ytdl_data["title"]),
-        thumb=sedlyf,
-        caption=capy,
-        supports_streaming=True,
-        progress=progress,
-        progress_args=(
-            pablo,
-            c_time,
-            f"`Uploading {urlissed} Song From YouTube Music!`",
-            file_stark,
-        ),
-    )
-    await pablo.delete()
-    for files in (sedlyf, file_stark):
-        if files and os.path.exists(files):
-            os.remove(files)
-
-
 import asyncio
 from os import path
 
@@ -195,12 +120,33 @@ from pyrogram.types import (InlineKeyboardMarkup, InputMediaPhoto, Message,
 from youtube_search import YoutubeSearch
 import (BOT_USERNAME, DURATION_LIMIT, DURATION_LIMIT_MIN,
                    MUSIC_BOT_NAME, app, db_mem)
-from Yukki.Utilities.url import get_url
+
 loop = asyncio.get_event_loop()
 
-from youtubesearchpython import VideosSearch
 from Yukki.Utilities.changers import time_to_seconds
 
+
+from typing import Union
+
+def get_url(message_1: Message) -> Union[str, None]:
+    messages = [message_1]
+    if message_1.reply_to_message:
+        messages.append(message_1.reply_to_message)
+    text = ""
+    offset = None
+    length = None
+    for message in messages:
+        if offset:
+            break
+        if message.entities:
+            for entity in message.entities:
+                if entity.type == "url":
+                    text = message.text or message.caption
+                    offset, length = entity.offset, entity.length
+                    break
+    if offset in (None,):
+        return None
+    return text[offset : offset + length]
 
 def get_yt_info_id(videoid):
     url = f"https://www.youtube.com/watch?v={videoid}"
