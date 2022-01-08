@@ -1,4 +1,4 @@
-Pyrogram==0.8.0
+Pyrogram==1.2.6
 TgCrypto
 youtube_dl
 youtube_search_python
