@@ -15,39 +15,13 @@ from yt_dlp import YoutubeDL
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from Zaid.utils.pluginhelper import get_text, progress
-from Zaid import pbot, arq
 
-async def lyrics_func(answers, text):
-    song = await arq.lyrics(text)
-    if not song.ok:
-        answers.append(
-            InlineQueryResultArticle(
-                title="Error",
-                description=song.result,
-                input_message_content=InputTextMessageContent(
-                    song.result
-                ),
-            )
-        )
-        return answers
-    lyrics = song.result
-    song = lyrics.splitlines()
-    song_name = song[0]
-    artist = song[1]
-    if len(lyrics) > 4095:
-        lyrics = await hastebin(lyrics)
-        lyrics = f"**LYRICS_TOO_LONG:** [URL]({lyrics})"
-
-    msg = f"**__{lyrics}__**"
-
-    answers.append(
-        InlineQueryResultArticle(
-            title=song_name,
-            description=artist,
-            input_message_content=InputTextMessageContent(msg),
-        )
-    )
-    return answers
+bot = Client(
+   "Music-Bot",
+   api_id=API_ID,
+   api_hash=API_HASH,
+   bot_token=BOT_TOKEN,
+)
 
 
 def get_file_extension_from_url(url):
@@ -89,7 +63,7 @@ def download_youtube_audio(url: str):
     return [title, performer, duration, audio_file, thumbnail_file]
 
 
-@pbot.on_message(filters.command(["vsong", "video"]))
+@bot.on_message(filters.command(["vsong", "video"]))
 async def ytmusic(client, message: Message):
     urlissed = get_text(message)
 
@@ -165,7 +139,7 @@ async def ytmusic(client, message: Message):
             os.remove(files)
 
 
-@pbot.on_message(filters.command(["music", "song"]))
+@bot.on_message(filters.command(["music", "song"]))
 async def ytmusic(client, message: Message):
     urlissed = get_text(message)
     if not urlissed:
@@ -236,17 +210,3 @@ async def ytmusic(client, message: Message):
     for files in (sedlyf, file_stark):
         if files and os.path.exists(files):
             os.remove(files)
-
-
-@pbot.on_message(filters.command(["lyric", "lyrics"]))
-async def lyrics_func(_, message):
-    if len(message.command) < 2:
-        return await message.reply_text("**Usage:**\n/lyrics [QUERY]")
-    m = await message.reply_text("**__Searching your lyrics__**")
-    query = message.text.strip().split(None, 1)[1]
-    song = await arq.lyrics(query)
-    lyrics = song.result
-    if len(lyrics) < 4095:
-        return await m.edit(f"**__{lyrics}__**")
-    lyrics = await paste(lyrics)
-    await m.edit(f"**LYRICS_TOO_LONG:** [URL]({lyrics})")
