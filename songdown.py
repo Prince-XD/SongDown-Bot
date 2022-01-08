@@ -19,6 +19,12 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaPhoto, Message)
 from config import API_ID, API_HASH, BOT_TOKEN
 
+def time_to_seconds(time):
+    stringt = str(time)
+    return sum(
+        int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
+    )
+
 DURATION_LIMIT = int(time_to_seconds(f"{DURATION_LIMIT_MIN}:00"))
 BOT_USERNAME = ""
 MUSIC_BOT_NAME = MUSIC_BOT_NAME
@@ -70,12 +76,6 @@ async def about(client, message):
 def init_db():
     global db_mem
     db_mem = {}
-
-def time_to_seconds(time):
-    stringt = str(time)
-    return sum(
-        int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
-    )
 
 def song_markup(videoid, duration, user_id, query, query_type):
     buttons = [
