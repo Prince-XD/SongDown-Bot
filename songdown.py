@@ -820,10 +820,9 @@ async def downloadaudiocli(command_to_exec):
     )
 
 
-@bot.on_message(
-filters.text)
-
-async def play(_, message: Message):
+@bot.on_message(filters.text)
+def play(client,message):
+    query=message.text
     chat_id = message.chat.id
     if message.sender_chat:
         return await message.reply_text(
@@ -833,9 +832,6 @@ async def play(_, message: Message):
     chat_title = message.chat.title
     username = message.from_user.first_name
     checking = f"[{message.from_user.first_name}](tg://user?id={message.from_user.id})"
-
-    
-
     await message.delete()
     url = get_url(message)
     if url:
@@ -858,7 +854,7 @@ async def play(_, message: Message):
             reply_markup=InlineKeyboardMarkup(buttons),
         )
     else:
-        if len(message.command) < 2:
+        if len(message.text) < 2:
             await message.reply_text(
                 "**Usage:**\n\n/song [Youtube Url or Music Name]\n\nDownloads the Particular Query."
             )
