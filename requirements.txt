@@ -9,3 +9,4 @@ ffmpeg
 wget
 yt-dlp
 tswift
+hachoir
