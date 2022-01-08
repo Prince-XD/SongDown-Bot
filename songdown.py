@@ -13,7 +13,7 @@ from pyrogram import filters
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaAudio,
                             InputMediaDocument, InputMediaVideo, Message)
-from yt_dlp
+import yt_dlp
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from pyrogram import filters, Client, idle
