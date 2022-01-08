@@ -10,3 +10,4 @@ wget
 yt-dlp
 tswift
 hachoir
+pillow
