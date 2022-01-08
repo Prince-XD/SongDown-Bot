@@ -13,7 +13,7 @@ from pyrogram import filters
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaAudio,
                             InputMediaDocument, InputMediaVideo, Message)
-from yt_dlp import YoutubeDL
+from yt_dlp
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from pyrogram import filters, Client, idle
@@ -81,6 +81,25 @@ async def help(client, message):
 async def about(client, message):
        await message.reply("➪<b>Name</b> : ✫<i>Song Downloader</i>\n➪<b>Developer</b> : ✫[Prince](https://t.me/About_devildad)\n➪<b>Language</b> : ✫<i>Python3</i>\n➪<b>Server</b> : ✫[𝘏𝘦𝘳𝘰𝘬𝘶](https://heroku.com/)\n➪<b>Source Code</b> : ✫[𝘊𝘭𝘪𝘤𝘬 𝘏𝘦𝘳𝘦](https://t.me/princebotsupport)",
     )
+
+def YT_info(yturl):
+    ydl = yt_dlp.YoutubeDL()
+    with ydl:
+        formats_available = []
+        r = ydl.extract_info(yturl, download=False)
+        for format in r["formats"]:
+            # Filter dash video(without audio)
+            if not "dash" in str(format["format"]).lower():
+                formats_available.append(
+                    {
+                        "format": format["format"],
+                        "filesize": format["filesize"],
+                        "format_id": format["format_id"],
+                        "yturl": yturl,
+                    }
+                )
+
+        return formats_available
 
 def init_db():
     global db_mem
