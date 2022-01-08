@@ -6,6 +6,7 @@ from os import path
 import time
 import requests
 import logging
+import wget
 from urllib.parse import urlparse
 from typing import Union
 from pyrogram import filters
