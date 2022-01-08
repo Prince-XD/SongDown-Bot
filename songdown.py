@@ -25,11 +25,6 @@ def time_to_seconds(time):
         int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":")))
     )
 
-DURATION_LIMIT = int(time_to_seconds(f"{DURATION_LIMIT_MIN}:00"))
-BOT_USERNAME = ""
-MUSIC_BOT_NAME = MUSIC_BOT_NAME
-BOT_USERNAME = getme.username
-
 # logging
 bot = Client(
    "Music-Bot",
@@ -37,6 +32,13 @@ bot = Client(
    api_hash=API_HASH,
    bot_token=BOT_TOKEN,
 )
+
+getme = await bot.get_me()
+DURATION_LIMIT = int(time_to_seconds(f"{DURATION_LIMIT_MIN}:00"))
+BOT_USERNAME = ""
+MUSIC_BOT_NAME = MUSIC_BOT_NAME
+BOT_USERNAME = getme.username
+
 ## Extra Fns -------
 # Convert hh:mm:ss to seconds
 def time_to_seconds(time):
