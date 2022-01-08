@@ -271,7 +271,7 @@ async def qwertyuiopasdfghjkl(_, CallbackQuery):
     )
 
 
-@app.on_callback_query(filters.regex(pattern=r"song_right"))
+@bot.on_callback_query(filters.regex(pattern=r"song_right"))
 async def song_right(_, CallbackQuery):
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
