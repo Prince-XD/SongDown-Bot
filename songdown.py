@@ -28,6 +28,8 @@ def time_to_seconds(time):
 DURATION_LIMIT = int(time_to_seconds(f"{DURATION_LIMIT_MIN}:00"))
 BOT_USERNAME = ""
 MUSIC_BOT_NAME = MUSIC_BOT_NAME
+BOT_USERNAME = getme.username
+
 # logging
 bot = Client(
    "Music-Bot",
