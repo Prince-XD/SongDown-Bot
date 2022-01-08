@@ -10,7 +10,8 @@ import yt_dlp
 import logging
 from urllib.parse import urlparse
 from pyrogram import filters
-from pyrogram.types import Message
+from pyrogram.types import (InlineKeyboardMarkup, InputMediaPhoto, Message,
+                            Voice)
 from tswift import Song
 from yt_dlp import YoutubeDL
 from youtube_search import YoutubeSearch
