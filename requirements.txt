@@ -1,4 +1,4 @@
-pyrogram
+Pyrogram==1.2.11
 TgCrypto
 youtube_dl
 youtube_search_python
