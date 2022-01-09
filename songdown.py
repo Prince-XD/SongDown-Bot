@@ -824,10 +824,6 @@ async def downloadaudiocli(command_to_exec):
 async def play(client,message):
     query=message.text
     chat_id = message.chat.id
-    if message.sender_chat:
-        return await message.reply_text(
-            "You're an __Anonymous Admin__ in this Chat Group!\nRevert back to User Account From Admin Rights."
-        )
     user_id = message.from_user.id
     chat_title = message.chat.title
     username = message.from_user.first_name
