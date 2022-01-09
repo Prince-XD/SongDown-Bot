@@ -11,5 +11,4 @@ yt-dlp
 tswift
 hachoir
 pillow
-motor
-pymongo
+
