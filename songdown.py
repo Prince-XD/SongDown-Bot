@@ -25,6 +25,8 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL import Image
 
+loop = asyncio.get_event_loop()
+
 def time_to_seconds(time):
     stringt = str(time)
     return sum(
@@ -189,8 +191,6 @@ async def qwertyuiopasdfghjkl(_, CallbackQuery):
     await CallbackQuery.edit_message_reply_markup(
         reply_markup=InlineKeyboardMarkup(buttons)
     )
-
-loop = asyncio.get_event_loop()
 
 def get_url(message_1: Message) -> Union[str, None]:
     messages = [message_1]
