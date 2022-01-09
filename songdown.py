@@ -29,6 +29,8 @@ def init_db():
     global db_mem
     db_mem = {}
 
+init_db()
+
 def time_to_seconds(time):
     stringt = str(time)
     return sum(
