@@ -12,7 +12,7 @@ from typing import Union
 from pyrogram import filters
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaAudio,
-                            InputMediaDocument, InputMediaVideo, Message)
+                            InputMediaDocument, InputMediaVideo, message)
 import yt_dlp
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
