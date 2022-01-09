@@ -25,6 +25,10 @@ from PIL import Image
 
 loop = asyncio.get_event_loop()
 
+def init_db():
+    global db_mem
+    db_mem = {}
+
 def time_to_seconds(time):
     stringt = str(time)
     return sum(
@@ -118,6 +122,9 @@ def init_db():
     db_mem = {}
 
 def song_markup(videoid, duration, user_id, query, query_type):
+    if videoid not in db_mem:
+        db_mem[videoid] = {}
+    db_mem[videoid]["check"] = 1
     buttons = [
         [
             InlineKeyboardButton(
