@@ -7,18 +7,16 @@ import time
 import requests
 import logging
 import wget
+import yt_dlp
 from urllib.parse import urlparse
 from typing import Union
 from pyrogram import filters
 from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaAudio,
-                            InputMediaDocument, InputMediaVideo, message)
-import yt_dlp
+                            InputMediaDocument, InputMediaPhoto, InputMediaVideo, Message)
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from pyrogram import filters, Client, idle
-from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
-                            InlineKeyboardMarkup, InputMediaPhoto, Message)
 from config import API_ID, API_HASH, BOT_TOKEN, DURATION_LIMIT_MIN, MUSIC_BOT_NAME
 from youtubesearchpython import VideosSearch
 from hachoir.metadata import extractMetadata
