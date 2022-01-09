@@ -12,3 +12,4 @@ tswift
 hachoir
 pillow
 motor
+pymongo
