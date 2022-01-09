@@ -19,22 +19,12 @@ from youtubesearchpython import SearchVideos
 from pyrogram import filters, Client, idle
 from motor.motor_asyncio import AsyncIOMotorClient as Bot
 from config import API_ID, API_HASH, BOT_TOKEN, DURATION_LIMIT_MIN, MUSIC_BOT_NAME
-from config import MONGO_DB_URI as mango
 from youtubesearchpython import VideosSearch
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from PIL import Image
 
 loop = asyncio.get_event_loop()
-
-MONGODB_CLI = Bot(mango)
-db = MONGODB_CLI.Yukki
-
-def init_db():
-    global db_mem
-    db_mem = {}
-
-init_db()
 
 def time_to_seconds(time):
     stringt = str(time)
@@ -125,9 +115,6 @@ def humanbytes(num, suffix="B"):
     return "%.1f%s%s" % (num, "Yi", suffix)
 
 def song_markup(videoid, duration, user_id, query, query_type):
-    if videoid not in db_mem:
-        db_mem[videoid] = {}
-    db_mem[videoid]["check"] = 1
     buttons = [
         [
             InlineKeyboardButton(
