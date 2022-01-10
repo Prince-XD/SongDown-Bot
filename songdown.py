@@ -17,7 +17,6 @@ from pyrogram.types import (CallbackQuery, InlineKeyboardButton,
 from youtube_search import YoutubeSearch
 from youtubesearchpython import SearchVideos
 from pyrogram import filters, Client, idle
-from motor.motor_asyncio import AsyncIOMotorClient as Bot
 from config import API_ID, API_HASH, BOT_TOKEN, DURATION_LIMIT_MIN, MUSIC_BOT_NAME
 from youtubesearchpython import VideosSearch
 from hachoir.metadata import extractMetadata
