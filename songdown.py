@@ -159,33 +159,6 @@ def song_download_markup(videoid, user_id):
         ],
     ]
     return buttons
-
-
-@bot.on_callback_query(filters.regex("forceclose"))
-async def forceclose(_, CallbackQuery):
-    callback_data = CallbackQuery.data.strip()
-    callback_request = callback_data.split(None, 1)[1]
-    query, user_id = callback_request.split("|")
-    if CallbackQuery.from_user.id != int(user_id):
-        return await CallbackQuery.answer(
-            "You're not allowed to close this.", show_alert=True
-        )
-    await CallbackQuery.message.delete()
-    await CallbackQuery.answer()
-
-@bot.on_callback_query(filters.regex("qwertyuiopasdfghjkl"))
-async def qwertyuiopasdfghjkl(_, CallbackQuery):
-    print("234")
-    await CallbackQuery.answer()
-    callback_data = CallbackQuery.data.strip()
-    callback_request = callback_data.split(None, 1)[1]
-    userid = CallbackQuery.from_user.id
-    videoid, user_id = callback_request.split("|")
-    buttons = song_download_markup(videoid, user_id)
-    await CallbackQuery.edit_message_reply_markup(
-        reply_markup=InlineKeyboardMarkup(buttons)
-    )
-
 def get_url(message_1: Message) -> Union[str, None]:
     messages = [message_1]
     if message_1.reply_to_message:
@@ -219,7 +192,6 @@ def get_yt_info_id(videoid):
             duration_sec = int(time_to_seconds(duration_min))
     return title, duration_min, duration_sec, thumbnail
 
-
 def get_yt_info_query(query: str):
     results = VideosSearch(query, limit=1)
     for result in results.result()["result"]:
@@ -233,7 +205,6 @@ def get_yt_info_query(query: str):
             duration_sec = int(time_to_seconds(duration_min))
     return title, duration_min, duration_sec, thumbnail, videoid
 
-
 def get_yt_info_query_slider(query: str, query_type: int):
     a = VideosSearch(query, limit=10)
     result = (a.result()).get("result")
@@ -246,6 +217,32 @@ def get_yt_info_query_slider(query: str, query_type: int):
     else:
         duration_sec = int(time_to_seconds(duration_min))
     return title, duration_min, duration_sec, thumbnail, videoid
+
+@bot.on_callback_query(filters.regex("forceclose"))
+async def forceclose(_, CallbackQuery):
+    callback_data = CallbackQuery.data.strip()
+    callback_request = callback_data.split(None, 1)[1]
+    query, user_id = callback_request.split("|")
+    if CallbackQuery.from_user.id != int(user_id):
+        return await CallbackQuery.answer(
+            "You're not allowed to close this.", show_alert=True
+        )
+    await CallbackQuery.message.delete()
+    await CallbackQuery.answer()
+
+@bot.on_callback_query(filters.regex("qwertyuiopasdfghjkl"))
+async def qwertyuiopasdfghjkl(_, CallbackQuery):
+    print("234")
+    await CallbackQuery.answer()
+    callback_data = CallbackQuery.data.strip()
+    callback_request = callback_data.split(None, 1)[1]
+    userid = CallbackQuery.from_user.id
+    videoid, user_id = callback_request.split("|")
+    buttons = song_download_markup(videoid, user_id)
+    await CallbackQuery.edit_message_reply_markup(
+        reply_markup=InlineKeyboardMarkup(buttons)
+    )
+
 
 user_time = {}
 flex = {}
