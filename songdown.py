@@ -113,52 +113,6 @@ def humanbytes(num, suffix="B"):
         num /= 1024.0
     return "%.1f%s%s" % (num, "Yi", suffix)
 
-def song_markup(videoid, duration, user_id, query, query_type):
-    buttons = [
-        [
-            InlineKeyboardButton(
-                text="❮",
-                callback_data=f"song_right B|{query_type}|{query}|{user_id}",
-            ),
-            InlineKeyboardButton(
-                text="Download",
-                callback_data=f"qwertyuiopasdfghjkl {videoid}|{user_id}",
-            ),
-            InlineKeyboardButton(
-                text="❯",
-                callback_data=f"song_right F|{query_type}|{query}|{user_id}",
-            ),
-        ],
-        [
-            InlineKeyboardButton(
-                text="🗑 Close Search",
-                callback_data=f"forceclose {query}|{user_id}",
-            )
-        ],
-    ]
-    return buttons
-
-
-def song_download_markup(videoid, user_id):
-    buttons = [
-        [
-            InlineKeyboardButton(
-                text="⬇️ Get Audio",
-                callback_data=f"gets audio|{videoid}|{user_id}",
-            ),
-            InlineKeyboardButton(
-                text="⬇️ Get Video",
-                callback_data=f"gets video|{videoid}|{user_id}",
-            ),
-        ],
-        [
-            InlineKeyboardButton(
-                text="🗑 Close Menu",
-                callback_data=f"forceclose {videoid}|{user_id}",
-            )
-        ],
-    ]
-    return buttons
 def get_url(message_1: Message) -> Union[str, None]:
     messages = [message_1]
     if message_1.reply_to_message:
@@ -217,6 +171,53 @@ def get_yt_info_query_slider(query: str, query_type: int):
     else:
         duration_sec = int(time_to_seconds(duration_min))
     return title, duration_min, duration_sec, thumbnail, videoid
+
+def song_markup(videoid, duration, user_id, query, query_type):
+    buttons = [
+        [
+            InlineKeyboardButton(
+                text="❮",
+                callback_data=f"song_right B|{query_type}|{query}|{user_id}",
+            ),
+            InlineKeyboardButton(
+                text="Download",
+                callback_data=f"qwertyuiopasdfghjkl {videoid}|{user_id}",
+            ),
+            InlineKeyboardButton(
+                text="❯",
+                callback_data=f"song_right F|{query_type}|{query}|{user_id}",
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                text="🗑 Close Search",
+                callback_data=f"forceclose {query}|{user_id}",
+            )
+        ],
+    ]
+    return buttons
+
+
+def song_download_markup(videoid, user_id):
+    buttons = [
+        [
+            InlineKeyboardButton(
+                text="⬇️ Get Audio",
+                callback_data=f"gets audio|{videoid}|{user_id}",
+            ),
+            InlineKeyboardButton(
+                text="⬇️ Get Video",
+                callback_data=f"gets video|{videoid}|{user_id}",
+            ),
+        ],
+        [
+            InlineKeyboardButton(
+                text="🗑 Close Menu",
+                callback_data=f"forceclose {videoid}|{user_id}",
+            )
+        ],
+    ]
+    return buttons
 
 @bot.on_callback_query(filters.regex("forceclose"))
 async def forceclose(_, CallbackQuery):
