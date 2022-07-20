@@ -6,7 +6,7 @@ import yt_dlp
 import psutil
 import asyncio
 import subprocess
-import config
+from config import API_ID, API_HASH, BOT_TOKEN
 import asyncio
 from os import path
 from typing import Union
