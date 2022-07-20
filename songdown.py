@@ -519,7 +519,7 @@ app = Client(
     bot_token=BOT_TOKEN,
 )
 
-@Client.on_message(command(["music", "song"]) & ~filters.edited)
+@app.on_message(command(["music", "song"]) & ~filters.edited)
 async def musicdl(_, message: Message):
     await message.delete()
     chat_id = message.chat.id
@@ -598,7 +598,7 @@ async def musicdl(_, message: Message):
         return
     
     
-@Client.on_callback_query(filters.regex(pattern=r"beta"))
+@app.on_callback_query(filters.regex(pattern=r"beta"))
 async def download_data(_,CallbackQuery): 
     callback_data = CallbackQuery.data.strip()
     chat_id = CallbackQuery.message.chat.id
@@ -642,7 +642,7 @@ async def download_data(_,CallbackQuery):
     await CallbackQuery.message.delete()
         
         
-@Client.on_callback_query(filters.regex(pattern=r"chonga"))
+@app.on_callback_query(filters.regex(pattern=r"chonga"))
 async def chonga(_,CallbackQuery): 
     callback_data = CallbackQuery.data.strip()
     callback_request = callback_data.split(None, 1)[1]
@@ -762,3 +762,5 @@ def gets(videoid, user_id):
             ],
         ]
     return buttons
+
+app.start()
